@@ -1,0 +1,54 @@
+
+### Interval Of Announcement
+#In seconds
+announcementInterval: 600
+
+### Different priority behavior
+# highest -> shows only a streamers with higghest priority
+# order -> order streamers 
+# random -> sort the list randomly
+# none -> ignore priority
+priorityBehavior: none
+
+### Quantity of streamers to show in an announcement
+# 0 for unlimited
+limit: 5
+
+# Streamer must be online in minecraft server?
+online: true
+
+# whether the name should contain the clickable link to the channel
+linkToChannel: true
+
+# Look at the plugin page on spigot to see how to get this data
+twitch:
+   cliendId: "TwitchClientIdHere"
+   clientSecret: "TwitchclientSecretHere"
+
+### Messages
+# for translating
+messages:
+   nopermission: "&cNo permission {permission}"
+   invalidCommand: "&cInvalid Command"
+   removedStreamer: "&2Removed Streamer {twitchUser}"
+   addedStreamer: '&2Added Streamer'
+   announced: '&2Announcement will occur in instants'
+   streamerList:
+      start: "&6========> &eStreamer List &6<========"
+      streamer: "&6{twitchUser} {minecraftNick} {priority}"
+      end: "\n"
+      empty: "&6No registered streamers"
+   announcement:
+      completed: "&2Announcement Completed"
+      header: "&6==> &eWe have streamer in live &6<=="
+      streamer: "&a{minecraftNick} -> {twitchUser}"
+      separator: "\n"
+      footer: "\n"
+   help:
+      header: "&6========> &eTwitchAnnounce Help &6<========"
+      list: "&6/twitchannounce list &7- &blist all streamser"
+      add: "&6/twitchannounce add {twitchUser} {minecraftNick} [priority] &7- &badd new streamer to announcements"
+      remove: "&6/twitchannounce remove {twitchUser} &7- &bremove a streamer"
+      announce: "&6/twitchannounce announce &7- &bannounce immediately"
+      none: "&byou don't have access to any commands"
+      footer: "\n"
