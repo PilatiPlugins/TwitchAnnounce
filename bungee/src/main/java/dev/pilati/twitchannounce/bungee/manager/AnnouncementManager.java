@@ -23,6 +23,7 @@ public class AnnouncementManager extends dev.pilati.twitchannounce.core.manager.
 
     private TwitchAnnounce plugin;
     private ScheduledTask timer;
+    private int lastCount = 0;
 
     public AnnouncementManager(TwitchAnnounce plugin) {
         this.plugin = plugin;
@@ -36,6 +37,7 @@ public class AnnouncementManager extends dev.pilati.twitchannounce.core.manager.
     public void announceStreamersInLive() {
         try {
             List<Streamer> streamers = getAllStreamersInLive(getOnlineStreamers());
+            lastCount = streamers.size();
 
             if(streamers.size() > 0){
                 announceToAll(streamers);
@@ -153,5 +155,9 @@ public class AnnouncementManager extends dev.pilati.twitchannounce.core.manager.
             plugin.getProxy().getScheduler().cancel(this.timer);
             timer = null;
         }
+    }
+
+    public int getLastCount() {
+        return lastCount;
     }
 }

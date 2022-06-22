@@ -30,6 +30,7 @@
         <version>3.3.0</version>
         <executions>
           <execution>
+            <id>dev.pilati.twitchannounce.spigot.shade.core</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
@@ -37,15 +38,28 @@
             <configuration>
               <artifactSet>
                 <includes>
-                    <include>org.apache.httpcomponents.client5:httpclient5</include>
-                    <include>org.apache.httpcomponents.core5:httpcore5</include>
-                    <include>org.json:json</include>
-                    <include>dev.pilati.twitchannounce:core</include>
+                  <include>dev.pilati.twitchannounce:core</include>
                 </includes>
-            </artifactSet>
-            <minimizeJar>true</minimizeJar>
+              </artifactSet>
+              <minimizeJar>true</minimizeJar>
             </configuration>
           </execution>
+          <execution>
+            <id>dev.pilati.twitchannounce.spigot.shade.libs</id>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <relocations>
+                    <relocation>
+                        <pattern>org.bstats</pattern>
+                        <shadedPattern>dev.pilati.twitchannounce.bstats</shadedPattern>
+                    </relocation>
+                </relocations>
+                <minimizeJar>false</minimizeJar>
+            </configuration>
+        </execution>
         </executions>
       </plugin>
     </plugins>
@@ -70,6 +84,12 @@
       <groupId>dev.pilati.twitchannounce</groupId>
       <artifactId>core</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bstats</groupId>
+      <artifactId>bstats-bukkit</artifactId>
+      <version>3.0.0</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>

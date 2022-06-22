@@ -14,13 +14,14 @@ import org.bukkit.entity.Player;
 import dev.pilati.twitchannounce.core.Streamer;
 import dev.pilati.twitchannounce.core.task.AnnounceTask;
 import dev.pilati.twitchannounce.spigot.TwitchAnnounce;
+import dev.pilati.twitchannounce.spigot.task.AnnounceTimer;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import task.AnnounceTimer;
 
 public class AnnouncementManager extends dev.pilati.twitchannounce.core.manager.AnnouncementManager {
     TwitchAnnounce plugin;
     private AnnounceTimer timer;
+    private int lastCount = 0;
 
     public AnnouncementManager(TwitchAnnounce plugin) {
         this.plugin = plugin;
@@ -68,6 +69,7 @@ public class AnnouncementManager extends dev.pilati.twitchannounce.core.manager.
     public void announceStreamersInLive() {
         try {
             List<Streamer> streamers = getAllStreamersInLive(getOnlineStreamers());
+            lastCount = streamers.size();
 
             if(streamers.size() > 0){
                 announceToAll(streamers);
@@ -153,5 +155,9 @@ public class AnnouncementManager extends dev.pilati.twitchannounce.core.manager.
             timer.cancel();
             timer = null;
         }
+    }
+
+    public int getLastCount() {
+        return lastCount;
     }
 }

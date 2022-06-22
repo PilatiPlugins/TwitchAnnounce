@@ -1,4 +1,4 @@
-package task;
+package dev.pilati.twitchannounce.spigot.task;
 
 import org.bukkit.scheduler.BukkitRunnable;
 

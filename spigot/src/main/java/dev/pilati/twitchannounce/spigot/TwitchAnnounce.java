@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import dev.pilati.twitchannounce.core.manager.IntegrationManager;
 import dev.pilati.twitchannounce.spigot.manager.LoggingManager;
+import dev.pilati.twitchannounce.spigot.manager.MetricsManager;
 import dev.pilati.twitchannounce.spigot.command.TwitchAnnounceCommand;
 import dev.pilati.twitchannounce.spigot.manager.AnnouncementManager;
 import dev.pilati.twitchannounce.spigot.manager.ConfigManager;
@@ -13,6 +14,7 @@ public class TwitchAnnounce extends JavaPlugin{
     public AnnouncementManager announcementManager;
     public IntegrationManager integrationManager;
     public LoggingManager loggingManager;
+    public MetricsManager metricsManager;
 
     @Override
     public void onEnable() {
@@ -35,6 +37,9 @@ public class TwitchAnnounce extends JavaPlugin{
         configManager.loadConfig();
         this.getCommand("twitchannounce").setExecutor(new TwitchAnnounceCommand(this));
         announcementManager.initTimer();
+        
+        metricsManager = new MetricsManager(this);
+        metricsManager.init();
     }
 
     @Override

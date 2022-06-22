@@ -36,12 +36,11 @@ public class IntegrationManager {
 
 	private String getToken() throws ParseException, URISyntaxException, IOException {
 		String expiresAt = configManager.getSettingsString("settings.twitch.expires_at");
-		if(expiresAt == null){
+		if(expiresAt == null || expiresAt.isEmpty()){
 			return requestToken();
 		}
 		
 		try{
-
 			LocalDateTime expires = LocalDateTime.parse(expiresAt, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 			if (expires.isAfter(LocalDateTime.now())) {
 				return configManager.getSettingsString("settings.twitch.token");
