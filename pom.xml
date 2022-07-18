@@ -2,9 +2,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.pilati.twitchannounce</groupId>
     <artifactId>TwitchAnnounce</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <name>TwitchAnnounce</name>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
   
     <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,10 +12,102 @@
       <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <modules>
-        <module>core</module>
-        <module>spigot</module>
-        <module>bungee</module>
-    </modules>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.3.0</version>
+          <executions>
+            <execution>
+              <id>dev.pilati.twitchannounce.core.shade.libs</id>
+              <phase>package</phase>
+              <goals>
+                  <goal>shade</goal>
+              </goals>
+              <configuration>
+                  <relocations>
+                      <relocation>
+                          <pattern>org.apache.httpcomponents.client5.httpclient5</pattern>
+                          <shadedPattern>dev.pilati.twitchannounce.httpclient5</shadedPattern>
+                      </relocation>
+                      <relocation>
+                          <pattern>org.apache.httpcomponents.core5.httpcore5</pattern>
+                          <shadedPattern>dev.pilati.twitchannounce.httpcore5</shadedPattern>
+                      </relocation>
+                      <relocation>
+                          <pattern>org.json.json</pattern>
+                          <shadedPattern>dev.pilati.twitchannounce.json</shadedPattern>
+                      </relocation>
+                      <relocation>
+                          <pattern>org.bstats</pattern>
+                          <shadedPattern>dev.pilati.twitchannounce.bstats</shadedPattern>
+                      </relocation>
+                  </relocations>
+                  <minimizeJar>true</minimizeJar>
+              </configuration>
+          </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+
+    <repositories>
+      <repository>
+        <id>org.spigotmc</id>
+        <url>https://hub.spigotmc.org/nexus/content/repositories/public/</url>
+      </repository>
+      <repository>
+        <id>bungeecord-repo</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      </repository>
+    </repositories>
+
+    <dependencies>
+      <!-- COMMON -->
+      <dependency>
+        <groupId>org.apache.httpcomponents.client5</groupId>
+        <artifactId>httpclient5</artifactId>
+        <version>5.1.3</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.httpcomponents.core5</groupId>
+          <artifactId>httpcore5</artifactId>
+          <version>5.1.3</version>
+      </dependency>
+      <dependency>
+          <groupId>org.json</groupId>
+          <artifactId>json</artifactId>
+          <version>20220320</version>
+      </dependency>
+      <!-- SPIGOT -->
+      <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-api</artifactId>
+        <version>1.16.5-R0.1-SNAPSHOT</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.bstats</groupId>
+        <artifactId>bstats-bukkit</artifactId>
+        <version>3.0.0</version>
+        <scope>compile</scope>
+      </dependency>
+      <!-- BUNGEECORD -->
+      <dependency>
+        <groupId>net.md-5</groupId>
+        <artifactId>bungeecord-api</artifactId>
+        <version>1.16-R0.5-SNAPSHOT</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.bstats</groupId>
+        <artifactId>bstats-bungeecord</artifactId>
+        <version>3.0.0</version>
+        <scope>compile</scope>
+      </dependency>
+    </dependencies>
   </project>
   

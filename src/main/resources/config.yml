@@ -1,0 +1,83 @@
+
+announcement:
+   # Announcement interval to announce all streamers if no new live started (in seconds)
+   # 0 to disable full announcements
+   unmodifiedInterval: 600
+
+   ### Interval to update list with streamers in live (in seconds)
+   # 0 to disable and update only in full announcement
+   updateInterval: 60
+
+   ### Behavior to announce if a new live has started
+   # new -> Only advertises streamers who started the live since the last update
+   # full -> Announce all streamers, even those who were live since the last update
+   modifiedBehavior: new
+
+   ### if true unmodifiedInterval is resetted when new live is announced
+   modifiedResetFullAnnouncement: true
+
+   ### Announces all streamers to players joining the server
+   onPlayerJoin: true
+
+   ### Show announcement to streamers in live
+   # false -> Hide announcement from streamers in live
+   announceToStreamersInLive: true
+
+   #Highest Priority Only
+   #shows only a streamers with higghest priority
+   highestPriorityOnly: false
+
+   ### List Ordering Behavior
+   # priority (default) -> order streamers by priority (Higher priority first)
+   # reverse_priority -> order streamers by priority (Lower priority first)
+   # random -> sort the list randomly
+   # twitch_alphabetic -> Alphabetical order by name on twitch
+   # mine_alphabetic -> Alphabetical order by minecraft nick
+   # none -> show list "as is"
+   orderBehavior: priority, twitch_alphabetic
+
+   ### Limit
+   # max streamers should show in the list
+   limit: 5
+
+   ### Streamer must be online in minecraft server?
+   online: true
+
+   # whether the name should contain the clickable link to the channel
+   linkToChannel: true
+
+# Look at the plugin page on spigot to see how to get this data
+twitch:
+   cliendId: "TwitchClientIdHere"
+   clientSecret: "TwitchclientSecretHere"
+
+### Messages
+# for translating
+messages:
+   nopermission: "&cNo permission {permission}"
+   invalidCommand: "&cInvalid Command"
+   removedStreamer: "&2Removed Streamer {twitchUser}"
+   addedStreamer: '&2Added Streamer'
+   announced: '&2Announcement will occur in instants'
+   streamerList:
+      start: "&6========> &eStreamer List &6<========"
+      streamer: "&6{twitchUser} {minecraftNick} {priority}"
+      end: "\n"
+      empty: "&6No registered streamers"
+   announcement:
+      completed: "&2Announcement Completed"
+      header: "&6==> &eWe have streamer in live &6<=="
+      streamer: "&a{minecraftNick} -> {twitchUser}"
+      separator: "\n"
+      footer: "\n"
+   help:
+      header: "&6========> &eTwitchAnnounce Help &6<========"
+      list: "&6/twitchannounce list &7- &blist all streamser"
+      add: "&6/twitchannounce add {twitchUser} {minecraftNick} [priority] &7- &badd new streamer to announcements"
+      remove: "&6/twitchannounce remove {twitchUser} &7- &bremove a streamer"
+      announce: "&6/twitchannounce announce &7- &bannounce immediately"
+      none: "&byou don't have access to any commands"
+      footer: "\n"
+
+# DO NOT CHANGE IT!
+version: "1.1"
