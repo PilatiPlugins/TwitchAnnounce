@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.pilati.twitchannounce</groupId>
     <artifactId>TwitchAnnounce</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <name>TwitchAnnounce</name>
     <packaging>jar</packaging>
   

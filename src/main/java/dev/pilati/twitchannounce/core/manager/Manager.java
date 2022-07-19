@@ -17,15 +17,19 @@ public abstract class Manager {
 
     public abstract void createTimerManager();
 
+    public abstract void createUpdateManager();
+    
     public abstract void disableAnnounccementManager();
-
+    
     public abstract void disableConfigurationManager();
-
+    
     public abstract void disableLoggingManager();
-
+    
     public abstract void disableMetricsManager();
-
+    
     public abstract void disableTimerManager();
+    
+    public abstract void disableUpdateManager();
 
     public abstract void registerCommands();
 
@@ -37,12 +41,14 @@ public abstract class Manager {
     
     public abstract void registerEvents();
 
+
     protected void initAllManagers() {
         createAnnounccementManager();
         createConfigurationManager();
         createLoggingManager();
         createMetricsManager();
         createTimerManager();
+        createUpdateManager();
     }
 
     public void enable(){
@@ -81,5 +87,6 @@ public abstract class Manager {
         disableLoggingManager();
         disableMetricsManager();
         disableTimerManager();
+        disableUpdateManager();
     }
 }

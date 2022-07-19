@@ -4,7 +4,7 @@
   <groupId>dev.pilati.twitchannounce</groupId>
   <artifactId>TwitchAnnounce</artifactId>
   <name>TwitchAnnounce</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <build>
     <plugins>
       <plugin>

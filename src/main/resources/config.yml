@@ -78,6 +78,7 @@ messages:
       announce: "&6/twitchannounce announce &7- &bannounce immediately"
       none: "&byou don't have access to any commands"
       footer: "\n"
+   update: "&cTwitchAnnounce is outdated. Version {version} releases! Visit {spigotPage} to download!"
 
 # DO NOT CHANGE IT!
-version: "1.1"
+version: "1.2"

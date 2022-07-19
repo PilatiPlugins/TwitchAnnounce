@@ -3,6 +3,7 @@ package dev.pilati.twitchannounce.bungee.manager;
 import dev.pilati.twitchannounce.bungee.TwitchAnnounce;
 import dev.pilati.twitchannounce.bungee.command.TwitchAnnounceCommand;
 import dev.pilati.twitchannounce.bungee.event.PlayerEvents;
+import dev.pilati.twitchannounce.core.manager.UpdateManager;
 
 public class Manager extends dev.pilati.twitchannounce.core.manager.Manager {
 
@@ -79,5 +80,15 @@ public class Manager extends dev.pilati.twitchannounce.core.manager.Manager {
     @Override
     public void registerEvents() {
         TwitchAnnounce.getInstance().getProxy().getPluginManager().registerListener(TwitchAnnounce.getInstance(), new PlayerEvents());
+    }
+
+    @Override
+    public void createUpdateManager() {
+        UpdateManager.currentVersion = TwitchAnnounce.getInstance().getDescription().getVersion();
+    }
+
+    @Override
+    public void disableUpdateManager() {
+        
     }
 }

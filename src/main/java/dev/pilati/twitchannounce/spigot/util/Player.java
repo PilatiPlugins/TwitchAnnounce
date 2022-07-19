@@ -19,5 +19,10 @@ public class Player extends dev.pilati.twitchannounce.core.util.Player{
     public void sendMessage(TextComponent message) {
         player.spigot().sendMessage(message);
     }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        return player.hasPermission(permission);
+    }
     
 }

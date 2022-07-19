@@ -2,12 +2,14 @@ package dev.pilati.twitchannounce.spigot.manager;
 
 import dev.pilati.twitchannounce.spigot.TwitchAnnounce;
 import dev.pilati.twitchannounce.spigot.task.AnnouncementTask;
+import dev.pilati.twitchannounce.spigot.task.UpdateCheckTask;
 import dev.pilati.twitchannounce.spigot.task.UpdateTask;
 
 public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerManager{
 
     private UpdateTask updateTimer;
     private AnnouncementTask announcementTimer;
+    private UpdateCheckTask updateCheck;
 
     public TimerManager(){
         instance = this;
@@ -52,5 +54,20 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
     public static void disable() {
         instance = null;
     }
+
+    protected void initUpdateCheckerTimer() {
+        long secs = 86400 * 20; // 24 hours
+        updateCheck = new UpdateCheckTask();
+        updateCheck.runTaskTimer(TwitchAnnounce.getInstance(), secs, secs);
+        updateCheck.run();
+    };
+
+    protected void cancelUpdateCheckerTimer() {
+        if(updateCheck != null){
+            updateCheck.cancel();
+        }
+    
+        updateCheck = null;
+    };
     
 }

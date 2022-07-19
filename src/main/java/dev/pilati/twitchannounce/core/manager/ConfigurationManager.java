@@ -45,7 +45,7 @@ public abstract class ConfigurationManager {
     }
 
     private static void handleUpdates() throws OutdatedException{
-        if(!"1.1".equals(getConfig().getString("version"))) {
+        if(!"1.2".equals(getConfig().getString("version"))) {
             throw new OutdatedException("Please backup your config.yml and re-create");
         }
     }

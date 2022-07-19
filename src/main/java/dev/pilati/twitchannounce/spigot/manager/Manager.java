@@ -1,5 +1,6 @@
 package dev.pilati.twitchannounce.spigot.manager;
 
+import dev.pilati.twitchannounce.core.manager.UpdateManager;
 import dev.pilati.twitchannounce.spigot.TwitchAnnounce;
 import dev.pilati.twitchannounce.spigot.command.TwitchAnnounceCommand;
 import dev.pilati.twitchannounce.spigot.event.PlayerEvents;
@@ -80,5 +81,14 @@ public class Manager extends dev.pilati.twitchannounce.core.manager.Manager{
     @Override
     public void registerEvents() {
         TwitchAnnounce.getInstance().getServer().getPluginManager().registerEvents(new PlayerEvents(), TwitchAnnounce.getInstance());
+    }
+
+    @Override
+    public void createUpdateManager() {
+        UpdateManager.currentVersion = TwitchAnnounce.getInstance().getDescription().getVersion();
+    }
+
+    @Override
+    public void disableUpdateManager() {
     }
 }
