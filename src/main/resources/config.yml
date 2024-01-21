@@ -1,3 +1,4 @@
+debug: false
 
 announcement:
    # Announcement interval to announce all streamers if no new live started (in seconds)
@@ -59,6 +60,7 @@ messages:
    removedStreamer: "&2Removed Streamer {twitchUser}"
    addedStreamer: '&2Added Streamer'
    announced: '&2Announcement will occur in instants'
+   debug: '&2Debug log is {state}'
    streamerList:
       start: "&6========> &eStreamer List &6<========"
       streamer: "&6{twitchUser} {minecraftNick} {priority}"
@@ -81,4 +83,4 @@ messages:
    update: "&cTwitchAnnounce is outdated. Version {version} releases! Visit {spigotPage} to download!"
 
 # DO NOT CHANGE IT!
-version: "1.2"
+version: "1.3"

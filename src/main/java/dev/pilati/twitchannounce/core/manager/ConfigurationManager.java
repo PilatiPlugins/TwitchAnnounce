@@ -3,6 +3,8 @@ package dev.pilati.twitchannounce.core.manager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.LogManager;
+import java.util.stream.Collectors;
 
 import dev.pilati.twitchannounce.core.util.Configuration;
 import dev.pilati.twitchannounce.core.util.Streamer;
@@ -32,11 +34,13 @@ public abstract class ConfigurationManager {
     public abstract void saveSettings();
 
     public static void loadConfiguration() throws OutdatedException, IOException{
+        LoggingManager.debug("Loading configuration files...");
         getInstance().config = getInstance().loadConfigWithDefaults();
         getInstance().settings = getInstance().loadSettingsWithDefaults();
 
-        handleUpdates();
+        LoggingManager.debug = getConfig().getBoolean("debug");
 
+        handleUpdates();
 
         getInstance().orderBehavior = ConfigurationManager.getConfig().getString("announcement.orderBehavior").split(",");
         for(int i = 0; i < getInstance().orderBehavior.length; i++){
@@ -45,7 +49,7 @@ public abstract class ConfigurationManager {
     }
 
     private static void handleUpdates() throws OutdatedException{
-        if(!"1.2".equals(getConfig().getString("version"))) {
+        if(!"1.3".equals(getConfig().getString("version"))) {
             throw new OutdatedException("Please backup your config.yml and re-create");
         }
     }
@@ -61,11 +65,18 @@ public abstract class ConfigurationManager {
 		for(String key : streamersConfig.getKeys(false)) {
 			streamers.add(getStreamer(key));
 		}
+
+        if(LoggingManager.debug){
+            LoggingManager.debug("Loaded " + streamers.size() + " streamers, list: " + 
+                streamers.stream().map(s -> s.twitchUser).collect(Collectors.joining(", "))
+            );
+        }
 		
 		return streamers;
 	}
 
     public static Streamer getStreamer(String twitchUser) {
+        LoggingManager.debug(() -> String.format("Getting streamer %s", twitchUser));
         String key = twitchUser.toLowerCase();
 		Streamer streamer = new Streamer();
 		streamer.twitchUser = getSettings().getString("settings.streamers." + key + ".twitchUser");
@@ -89,12 +100,14 @@ public abstract class ConfigurationManager {
 		getSettings().set("settings.streamers." + key + ".minecraftNick", streamer.minecraftNick);
 		getSettings().set("settings.streamers." + key + ".priority", streamer.priority);
 		getInstance().saveSettings();
+        LoggingManager.debug(() -> String.format("Added streamer %s", streamer.twitchUser));
 	}
 
     public static void removeStreamer(String twitchUser) {
         String key = twitchUser.toLowerCase();
 		getSettings().set("settings.streamers." + key, null);
 		getInstance().saveSettings();
+        LoggingManager.debug(() -> String.format("Removed streamer %s", twitchUser));
 	}
 
     public static void removeStreamerByNick(String minecraftNick) {

@@ -19,8 +19,10 @@ public class ConfigurationManager extends dev.pilati.twitchannounce.core.manager
 
 	@Override
     public Configuration loadConfigWithDefaults(){
+		LoggingManager.debug("ConfigurationManager.loadConfigWithDefaults -> loading config.yml");
         File configFile = new File(TwitchAnnounce.getInstance().getDataFolder(), "config.yml");
 		if (!configFile.exists()) {
+			LoggingManager.debug("ConfigurationManager.loadConfigWithDefaults -> config.yml not found, saving default");
 			TwitchAnnounce.getInstance().saveResource("config.yml", false);
 		}
 
@@ -31,8 +33,10 @@ public class ConfigurationManager extends dev.pilati.twitchannounce.core.manager
 
 	@Override
     public Configuration loadSettingsWithDefaults(){
+		LoggingManager.debug("ConfigurationManager.loadSettingsWithDefaults -> loading settings.yml");
         File settingsFile = new File(TwitchAnnounce.getInstance().getDataFolder(), "settings.yml");
 		if (!settingsFile.exists()) {
+			LoggingManager.debug("ConfigurationManager.loadSettingsWithDefaults -> settings.yml not found, saving default");
 			TwitchAnnounce.getInstance().saveResource("settings.yml", false);
 		}
 
@@ -45,6 +49,7 @@ public class ConfigurationManager extends dev.pilati.twitchannounce.core.manager
 	public void saveSettings() {
 		try{
 			settingsConfiguration.save(new File(TwitchAnnounce.getInstance().getDataFolder(), "settings.yml"));
+			LoggingManager.debug("ConfigurationManager.saveSettings -> settings.yml saved");
 		}catch (IOException e){
 			LoggingManager.getLogger().log(Level.SEVERE, "error removing streamer", e);
 		}

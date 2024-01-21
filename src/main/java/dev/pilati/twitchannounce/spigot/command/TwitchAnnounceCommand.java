@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import dev.pilati.twitchannounce.spigot.manager.AnnouncementManager;
+import dev.pilati.twitchannounce.core.manager.LoggingManager;
 import dev.pilati.twitchannounce.core.util.Streamer;
 import dev.pilati.twitchannounce.spigot.manager.ConfigurationManager;
 import net.md_5.bungee.api.ChatColor;
@@ -21,7 +22,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class TwitchAnnounceCommand  implements CommandExecutor, TabCompleter{
-	private static final String[] COMMANDS = { "announce", "add", "list", "remove", "help" };
+	private static final String[] COMMANDS = { "announce", "add", "list", "remove", "help", "debug" };
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -47,6 +48,11 @@ public class TwitchAnnounceCommand  implements CommandExecutor, TabCompleter{
 		
 		if("announce".equalsIgnoreCase(args[0])) {
 			announceNow(sender);
+			return true;
+		}
+		
+		if("debug".equalsIgnoreCase(args[0])) {
+			toggleDebug(sender);
 			return true;
 		}
 		
@@ -212,5 +218,17 @@ public class TwitchAnnounceCommand  implements CommandExecutor, TabCompleter{
 
 		sender.sendMessage(ConfigurationManager.getConfig().getMessage("messages.announced"));
 		AnnouncementManager.announceLiveToAll();
+	}
+
+	private void toggleDebug(CommandSender sender) {
+		if(!sender.hasPermission("twitchannounce.debug")) {
+			String message = ConfigurationManager.getConfig().getMessage("messages.nopermission");
+			sender.sendMessage(message.replace("{permission}", "[twitchannounce.debug]"));
+			return;
+		}
+
+		LoggingManager.debug = !LoggingManager.debug;
+		String message = ConfigurationManager.getConfig().getMessage("messages.debug");
+		sender.sendMessage(message.replace("{state}", LoggingManager.debug ? "enabled" : "disabled"));
 	}
 }

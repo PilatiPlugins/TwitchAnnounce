@@ -52,9 +52,11 @@ public abstract class Manager {
     }
 
     public void enable(){
+        LoggingManager.debug("Manager.enable - initAllManagers");
         initAllManagers();
-
+        
         try{
+            LoggingManager.debug("Manager.enable - loadConfiguration");
             ConfigurationManager.loadConfiguration();
 
             String clientId = ConfigurationManager.getConfig().getString("twitch.cliendId");
@@ -74,14 +76,19 @@ public abstract class Manager {
             LoggingManager.getLogger().log(Level.SEVERE, "config.yml is outdated. Please backup existing, delete and re-create");
         }
 
+        LoggingManager.debug("Manager.enable - registerCommands");
         registerCommands();
+        LoggingManager.debug("Manager.enable - initTimers");
         initTimers();
+        LoggingManager.debug("Manager.enable - registerEvents");
         registerEvents();
     }
 
     public void disable() {
+        LoggingManager.debug("Manager.disable - cancelTimers");
         cancelTimers();
 
+        LoggingManager.debug("Manager.disable - disable all Managers");
         disableAnnounccementManager();
         disableConfigurationManager();
         disableLoggingManager();

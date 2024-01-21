@@ -15,5 +15,4 @@ public class PlayerEvents implements Listener{
         AnnouncementManager.announceToPlayer(player);
         UpdateManager.verifyAnnounceToPlayer(player);
     }
-    
 }

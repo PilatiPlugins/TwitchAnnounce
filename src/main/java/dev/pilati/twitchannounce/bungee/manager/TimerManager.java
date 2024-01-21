@@ -22,6 +22,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
     @Override
     public void initUpdateTimer() {
         long secs = ConfigurationManager.getConfig().getLong("announcement.updateInterval");
+        LoggingManager.debug(() -> String.format("TimerManager.initUpdateTimer -> secs: %d", secs));
         if(secs > 0){
             this.updateTimer = TwitchAnnounce.getInstance().getProxy().getScheduler().schedule(
                 TwitchAnnounce.getInstance(), new UpdateTask(), secs, TimeUnit.SECONDS
@@ -32,6 +33,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
     @Override
     public void initAnnouncementTimer() {
         long secs = ConfigurationManager.getConfig().getLong("announcement.unmodifiedInterval");
+        LoggingManager.debug(() -> String.format("TimerManager.initAnnouncementTimer -> secs: %d", secs));
         if(secs > 0){
             this.announcementTimer = TwitchAnnounce.getInstance().getProxy().getScheduler().schedule(
                 TwitchAnnounce.getInstance(), new AnnouncementTask(), secs, TimeUnit.SECONDS
@@ -43,6 +45,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
     public void cancelUpdateTimer() {
         if(updateTimer != null){
             updateTimer.cancel();
+            LoggingManager.debug("TimerManager.cancelUpdateTimer -> updateTimer cancelled");
         }
 
         updateTimer = null;
@@ -52,6 +55,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
     public void cancelAnnouncementTimer() {
         if(announcementTimer != null){
             announcementTimer.cancel();
+            LoggingManager.debug("TimerManager.cancelAnnouncementTimer -> announcementTimer cancelled");
         }
     
         announcementTimer = null;
@@ -64,6 +68,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
     @Override
     protected void initUpdateCheckerTimer() {
         long secs = 86400 * 20; // 24 hours
+        LoggingManager.debug(() -> String.format("TimerManager.initUpdateCheckerTimer -> secs: %d", secs));
         if(secs > 0){
             this.updateCheckTimer = TwitchAnnounce.getInstance().getProxy().getScheduler().schedule(
                 TwitchAnnounce.getInstance(), new UpdateCheckTask(), secs, TimeUnit.SECONDS
@@ -77,6 +82,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
     protected void cancelUpdateCheckerTimer() {
         if(updateCheckTimer != null){
             updateCheckTimer.cancel();
+            LoggingManager.debug("TimerManager.cancelUpdateCheckerTimer -> updateCheckTimer cancelled");
         }
 
         updateCheckTimer = null;

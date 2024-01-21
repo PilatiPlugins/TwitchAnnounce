@@ -22,6 +22,7 @@ public abstract class UpdateManager {
     private static final String spigotResourceId = "102816";
 
     public static void checkForUpdates(){
+        LoggingManager.debug("UpdateManager.checkForUpdates - Checking for updates");
         if(currentVersion == null){
             return;
         }
@@ -42,6 +43,7 @@ public abstract class UpdateManager {
 
                 latestVersion = EntityUtils.toString(response.getEntity());
 
+                LoggingManager.debug(() -> String.format("UpdateManager.checkForUpdates - Current version: %s, Latest version: %s", currentVersion, latestVersion));
                 if(!currentVersion.equals(latestVersion)){
                     announceUpdate();
                 }
@@ -52,6 +54,7 @@ public abstract class UpdateManager {
     }
 
     private static TextComponent makeMessage(){
+        LoggingManager.debug("UpdateManager.makeMessage - Making message");
         String message = ConfigurationManager.getConfig().getMessage("messages.update");
         message = message.replace("{version}", latestVersion)
                     .replace("{spigotPage}", "https://www.spigotmc.org/resources/twitchannounce." + spigotResourceId);
@@ -62,6 +65,7 @@ public abstract class UpdateManager {
     }
 
     public static void announceUpdate(){
+        LoggingManager.debug("UpdateManager.announceUpdate - Announcing update");
         TextComponent message = makeMessage();
         LoggingManager.getLogger().log(Level.WARNING, message.toPlainText());
 
@@ -73,6 +77,7 @@ public abstract class UpdateManager {
     }
 
     public static void verifyAnnounceToPlayer(Player player){
+        LoggingManager.debug(() -> String.format("UpdateManager.verifyAnnounceToPlayer - Verifying announce to player %s", player.getName()));
         if(!currentVersion.equals(latestVersion)){
             if(player.hasPermission("twitchannounce.update")){
                 player.sendMessage(makeMessage());

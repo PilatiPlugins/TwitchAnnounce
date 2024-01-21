@@ -15,7 +15,13 @@ public class AnnouncementManager extends dev.pilati.twitchannounce.core.manager.
 
     @Override
     public List<dev.pilati.twitchannounce.core.util.Player> getOnlinePlayers() {
-        return Bukkit.getOnlinePlayers().stream().map(p -> new Player(p)).collect(Collectors.toList());
+        List<dev.pilati.twitchannounce.core.util.Player> players = Bukkit.getOnlinePlayers()
+            .stream()
+            .map(p -> new Player(p))
+            .collect(Collectors.toList());
+
+        LoggingManager.debug(() -> String.format("AnnouncementManager.getOnlinePlayers -> count: %d", players.size()));
+        return players;
     }
 
     public static void disable() {

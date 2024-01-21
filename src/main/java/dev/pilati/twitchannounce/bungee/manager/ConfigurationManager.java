@@ -21,16 +21,18 @@ public class ConfigurationManager extends dev.pilati.twitchannounce.core.manager
     }
     
     public void saveDefaultConfig(String fileName) throws IOException{
+        LoggingManager.debug(() -> String.format("ConfigurationManager.saveDefaultConfig -> fileName: %s", fileName));
         if(!TwitchAnnounce.getInstance().getDataFolder().exists()){
             TwitchAnnounce.getInstance().getDataFolder().mkdirs();
         }
-    
+        
         File configFile = new File(TwitchAnnounce.getInstance().getDataFolder(), fileName);
-    
+        
         if(!configFile.exists()){
+            LoggingManager.debug("Config file does not exist, creating it now");
             FileOutputStream outputStream = new FileOutputStream(configFile);
-            InputStream in = TwitchAnnounce.getInstance().getResourceAsStream(fileName);
-            in.transferTo(outputStream);
+            InputStream inputStream = TwitchAnnounce.getInstance().getResourceAsStream(fileName);
+            copyFile(inputStream, outputStream);
         }
     }
 
@@ -52,6 +54,7 @@ public class ConfigurationManager extends dev.pilati.twitchannounce.core.manager
     public void saveSettings() {
         try{
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(settingsConfiguration, new File(TwitchAnnounce.getInstance().getDataFolder(), "settings.yml"));
+            LoggingManager.debug("ConfigurationManager.saveSettings -> settings.yml saved");
         }catch(IOException e){
             TwitchAnnounce.getInstance().getLogger().log(Level.SEVERE, "Error saving settings.yml", e);
             TwitchAnnounce.getInstance().onDisable();
@@ -60,5 +63,15 @@ public class ConfigurationManager extends dev.pilati.twitchannounce.core.manager
 
     public static void disable() {
         instance = null;
+    }
+
+    public void copyFile(InputStream inputStream, FileOutputStream outputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        int length;
+        while((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length);
+        }
+        inputStream.close();
+        outputStream.close();
     }
 }

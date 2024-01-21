@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.pilati.twitchannounce</groupId>
     <artifactId>TwitchAnnounce</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <name>TwitchAnnounce</name>
     <packaging>jar</packaging>
   
@@ -98,7 +98,7 @@
       <dependency>
         <groupId>net.md-5</groupId>
         <artifactId>bungeecord-api</artifactId>
-        <version>1.16-R0.5-SNAPSHOT</version>
+        <version>1.19-R0.1-SNAPSHOT</version>
         <type>jar</type>
         <scope>provided</scope>
       </dependency>

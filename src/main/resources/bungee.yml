@@ -1,7 +1,8 @@
 name: TwitchAnnounce
 main: dev.pilati.twitchannounce.bungee.TwitchAnnounce
-version: 1.2
+version: 1.3
 api-version: 1.16
+author: Pilati
 permissions:
    twitchannounce.remove:
       default: op
@@ -12,6 +13,8 @@ permissions:
    twitchannounce.announce:
       default: op
    twitchannounce.update:
+      default: op
+   twitchannounce.debug:
       default: op
 commands:
    twitchannounce:

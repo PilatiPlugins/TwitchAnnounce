@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import dev.pilati.twitchannounce.bungee.TwitchAnnounce;
 import dev.pilati.twitchannounce.bungee.manager.ConfigurationManager;
+import dev.pilati.twitchannounce.core.manager.LoggingManager;
 import dev.pilati.twitchannounce.core.util.Streamer;
 import dev.pilati.twitchannounce.bungee.manager.AnnouncementManager;
 import net.md_5.bungee.api.ChatColor;
@@ -18,7 +19,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
 public class TwitchAnnounceCommand extends Command implements TabExecutor {
-    private static final String[] COMMANDS = { "announce", "add", "list", "remove", "help" };
+    private static final String[] COMMANDS = { "announce", "add", "list", "remove", "help", "debug" };
 
     public TwitchAnnounceCommand(String name) {
         super(name);
@@ -50,6 +51,11 @@ public class TwitchAnnounceCommand extends Command implements TabExecutor {
 			announceNow(sender);
 			return;
 		}
+
+		if("debug".equalsIgnoreCase(args[0])) {
+			toggleDebug(sender);
+			return;
+		}
 		
 		this.showHelp(sender);
 		return;
@@ -60,7 +66,6 @@ public class TwitchAnnounceCommand extends Command implements TabExecutor {
 		List<String> list = new ArrayList<String>();
 
 		if(args.length == 0 || (args.length == 1 && !Arrays.asList(COMMANDS).contains(args[0]))){
-
 
 			copyPartialMatches(args[0], Arrays.asList(COMMANDS), list);
 			return list;
@@ -244,5 +249,20 @@ public class TwitchAnnounceCommand extends Command implements TabExecutor {
         message = ConfigurationManager.getConfig().getMessage("messages.announced");
 		sender.sendMessage(new TextComponent(message));
 		AnnouncementManager.announceLiveToAll();
+	}
+
+	private void toggleDebug(CommandSender sender){
+		String message;
+		if(!sender.hasPermission("twitchannounce.debug")) {
+			message = ConfigurationManager.getConfig().getMessage("messages.nopermission");
+			message = message.replace("{permission}", "[twitchannounce.debug]");
+			sender.sendMessage(new TextComponent(message));
+			return;
+		}
+
+		LoggingManager.debug = !LoggingManager.debug;
+		message = ConfigurationManager.getConfig().getMessage("messages.debug");
+		message = message.replace("{state}", LoggingManager.debug ? "enabled" : "disabled");
+		sender.sendMessage(new TextComponent(message));
 	}
 }

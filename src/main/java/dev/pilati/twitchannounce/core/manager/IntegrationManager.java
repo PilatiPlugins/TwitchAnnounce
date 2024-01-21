@@ -25,6 +25,7 @@ import org.json.JSONArray;
 public class IntegrationManager {
 	
 	private static String getToken() throws ParseException, URISyntaxException, IOException {
+		LoggingManager.debug("IntegrationManager.getToken - Getting token");
 		String expiresAt = ConfigurationManager.getConfig().getString("settings.twitch.expires_at");
 		if(expiresAt == null || expiresAt.isEmpty()){
 			return requestToken();
@@ -44,6 +45,7 @@ public class IntegrationManager {
 	}
 
 	private static String requestToken() throws URISyntaxException, IOException, ParseException {
+		LoggingManager.debug("IntegrationManager.requestToken - Requesting token");
 
 		try (CloseableHttpClient client = HttpClients.createDefault();) {
 			URIBuilder uri = new URIBuilder("https://id.twitch.tv/oauth2/token");
@@ -76,9 +78,11 @@ public class IntegrationManager {
 		ConfigurationManager.getSettings().set("settings.twitch.token", token);
 		ConfigurationManager.getSettings().set("settings.twitch.expires_at", datetime);
 		ConfigurationManager.getInstance().saveSettings();
+		LoggingManager.debug("IntegrationManager.saveToken - Token saved");
 	}
 
 	public static List<Streamer> getLiveStreamers(List<Streamer> streamers) throws ParseException, URISyntaxException, IOException{
+		LoggingManager.debug("IntegrationManager.getLiveStreamers - Getting live streamers");
 		String token = getToken();
 
 		try (CloseableHttpClient client = HttpClients.createDefault();){
@@ -101,8 +105,10 @@ public class IntegrationManager {
 					throw new IOException("Error getting streamers: no response");
 				}
 
-				JSONObject json = new JSONObject(EntityUtils.toString(response.getEntity()));
-				
+				String responseString = EntityUtils.toString(response.getEntity());
+				LoggingManager.debug(() -> String.format("IntegrationManager.getLiveStreamers - Response: %s", responseString));
+
+				JSONObject json = new JSONObject(responseString);
 				return streamers.stream().filter(s -> verifyStreamerIsInLive(json, s)).collect(Collectors.toList());
 			}
 		}
