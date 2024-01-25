@@ -25,7 +25,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
         LoggingManager.debug(() -> String.format("TimerManager.initUpdateTimer -> secs: %d", secs));
         if(secs > 0){
             this.updateTimer = TwitchAnnounce.getInstance().getProxy().getScheduler().schedule(
-                TwitchAnnounce.getInstance(), new UpdateTask(), secs, TimeUnit.SECONDS
+                TwitchAnnounce.getInstance(), new UpdateTask(), 1, secs, TimeUnit.SECONDS
             );
         }
     }
@@ -36,7 +36,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
         LoggingManager.debug(() -> String.format("TimerManager.initAnnouncementTimer -> secs: %d", secs));
         if(secs > 0){
             this.announcementTimer = TwitchAnnounce.getInstance().getProxy().getScheduler().schedule(
-                TwitchAnnounce.getInstance(), new AnnouncementTask(), secs, TimeUnit.SECONDS
+                TwitchAnnounce.getInstance(), new AnnouncementTask(), 1, secs, TimeUnit.SECONDS
             );
         }
     }
@@ -71,7 +71,7 @@ public class TimerManager extends dev.pilati.twitchannounce.core.manager.TimerMa
         LoggingManager.debug(() -> String.format("TimerManager.initUpdateCheckerTimer -> secs: %d", secs));
         if(secs > 0){
             this.updateCheckTimer = TwitchAnnounce.getInstance().getProxy().getScheduler().schedule(
-                TwitchAnnounce.getInstance(), new UpdateCheckTask(), secs, TimeUnit.SECONDS
+                TwitchAnnounce.getInstance(), new UpdateCheckTask(), 1, secs, TimeUnit.SECONDS
             );
 
             UpdateManager.checkForUpdates();

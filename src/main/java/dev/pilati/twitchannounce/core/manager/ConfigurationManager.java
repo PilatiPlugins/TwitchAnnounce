@@ -3,7 +3,6 @@ package dev.pilati.twitchannounce.core.manager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.LogManager;
 import java.util.stream.Collectors;
 
 import dev.pilati.twitchannounce.core.util.Configuration;
@@ -49,7 +48,10 @@ public abstract class ConfigurationManager {
     }
 
     private static void handleUpdates() throws OutdatedException{
-        if(!"1.3".equals(getConfig().getString("version"))) {
+        if(
+            (!"1.4".equals(getConfig().getString("version"))) ||
+            (!"1.3".equals(getConfig().getString("version")))
+        ) {
             throw new OutdatedException("Please backup your config.yml and re-create");
         }
     }

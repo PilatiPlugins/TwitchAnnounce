@@ -83,4 +83,4 @@ messages:
    update: "&cTwitchAnnounce is outdated. Version {version} releases! Visit {spigotPage} to download!"
 
 # DO NOT CHANGE IT!
-version: "1.3"
+version: "1.4"
